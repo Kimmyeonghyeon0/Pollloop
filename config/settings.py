@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import dotenv_values
+
+# env 파일 로드
+ENV = dotenv_values(".env")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-c40op!*032kdw(*gdi8q)9-*_(rm9g=#j79$j*gvg#tz-urxo1'
+SECRET_KEY = ENV.get("Secret_Key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -29,8 +33,13 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+CUSTOM_APPS = [
+    'ask',
+    'form',
+    'user',
+]
 
-INSTALLED_APPS = [
+SYSTEM_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+INSTALLED_APPS = CUSTOM_APPS + SYSTEM_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
